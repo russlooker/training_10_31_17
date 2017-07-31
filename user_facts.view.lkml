@@ -9,7 +9,7 @@ view: user_facts {
         ,avg(sale_price) as avg_sale_per_user
       FROM public.order_items OI
       WHERE
-        {% condition users.created_date %} OI.created_at {% endcondition %}
+        1=1
 
       GROUP BY 1
        ;;
@@ -19,9 +19,11 @@ view: user_facts {
 #     distribution: "user_id"
   }
 
-  filter: created_date_filter {
-    type: date
-  }
+# templated filters example
+#        {% condition users.created_date %} OI.created_at {% endcondition %}
+#   filter: created_date_filter {
+#     type: date
+#   }
 
 
   dimension: avg_sale_per_user {

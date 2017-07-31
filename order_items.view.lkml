@@ -7,8 +7,6 @@ view: order_items {
     sql: ${TABLE}.id;;
   }
 
-
-
   dimension_group: created {
     type: time
     timeframes: [
@@ -49,15 +47,6 @@ view: order_items {
     sql: ${TABLE}.order_id;;
 #     description: "This is not to be confused with order id"
   }
-
-
-
-
-
-
-
-
-
 
   dimension_group: returned {
     type: time
