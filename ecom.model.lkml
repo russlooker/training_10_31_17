@@ -38,15 +38,6 @@ explore: order_items {
 
 }
 
-
-
-
-
-
-
-
-
-
 explore: users {
   join: user_facts {
 #     fields: [user_facts.average_lifetime_value
