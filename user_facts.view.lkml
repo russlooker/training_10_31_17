@@ -10,20 +10,19 @@ view: user_facts {
       FROM public.order_items OI
       WHERE
         1=1
-
       GROUP BY 1
        ;;
-#     persist_for: "24 hours"
-#     sql_trigger_value: select current_date ;;
-#     sortkeys: ["user_id"]
-#     distribution: "user_id"
+#     persist_for: "3 hours"
+#     sql_trigger_value: select current_date  ;;
+  datagroup_trigger: nightly_etl
+    sortkeys: ["user_id"]
+    distribution: "user_id"
   }
+#        AND {% condition created_date_filter %} OI.created_at {% endcondition %}
 
-# templated filters example
-#        {% condition users.created_date %} OI.created_at {% endcondition %}
-#   filter: created_date_filter {
-#     type: date
-#   }
+  filter: created_date_filter {
+    type: date
+  }
 
 
   dimension: avg_sale_per_user {

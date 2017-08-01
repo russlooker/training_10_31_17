@@ -6,10 +6,19 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+persist_for: "30 seconds"
+
+datagroup: nightly_etl {
+  sql_trigger: select curernt_date ;;
+  max_cache_age: "3 hours"
+}
+
+
 explore: order_items {
+  persist_with: nightly_etl
   join: users {
     type: left_outer
-    sql_on: ${order_items.user_id} = ${users.id} ;;
+    sql_on: ${order_items.user_id} = ${users.id};;
     relationship: many_to_one
   }
 
@@ -23,14 +32,20 @@ explore: order_items {
     type: left_outer
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
+#     fields: [products.department]
+    view_label: "Department"
   }
 
-  join: distribution_centers {
-    type: left_outer
-    sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;
-    relationship: many_to_one
-  }
 }
+
+
+
+
+
+
+
+
+
 
 explore: users {
   join: user_facts {
@@ -39,7 +54,7 @@ explore: users {
 #       , user_facts.latest_order_date_date
 #       , user_facts.created_date_filter
 #     ]
-#     view_label: "Users"
+    view_label: "Users"
     type: left_outer
     relationship: one_to_one
     sql_on: ${users.id} = ${user_facts.user_id} ;;
@@ -64,3 +79,6 @@ explore: inventory_items {
     sql_on: ${inventory_items.product_id}=${products.id} ;;
   }
 }
+
+
+explore: user_facts_2 {}

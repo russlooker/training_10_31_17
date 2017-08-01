@@ -7,6 +7,12 @@ view: order_items {
     sql: ${TABLE}.id;;
   }
 
+#   dimension: pk {
+#     type: string
+#     primary_key: yes
+#     sql: ${f1} || '-' || ${f2} ;;
+#   }
+
   dimension_group: created {
     type: time
     timeframes: [
@@ -20,7 +26,6 @@ view: order_items {
     ]
     sql: ${TABLE}.created_at ;;
   }
-
   dimension_group: delivered {
     type: time
     timeframes: [
@@ -38,7 +43,7 @@ view: order_items {
   dimension: inventory_item_id {
     type: number
     hidden: yes
-    sql: ${TABLE}.inventory_item_id ;;
+    sql: ${TABLE}.inventory_item_id;;
   }
 
   dimension: order_id {
@@ -56,6 +61,7 @@ view: order_items {
       date,
       week,
       month,
+      hour_of_day,
       quarter,
       year
     ]
@@ -64,7 +70,7 @@ view: order_items {
 
   dimension: sale_price {
     type: number
-    sql: ${TABLE}.sale_price;;
+    sql: ${TABLE}.sale_price ;;
   }
 
   dimension_group: shipped {
@@ -83,7 +89,8 @@ view: order_items {
 
   dimension: status {
     type: string
-    sql: ${TABLE}.status ;;
+    sql:
+    ${TABLE}.status ;;
   }
 
   dimension: user_id {
@@ -107,7 +114,7 @@ view: order_items {
   measure: total_sale_price {
     value_format_name: usd
     type:  sum
-    sql: ${sale_price} ;;
+    sql: ${sale_price};;
   }
 
   measure: average_sale_price {
@@ -128,6 +135,13 @@ view: order_items {
   measure: order_items_per_user {
     type: number
     sql: ${count}*1.0 / nullif(${users.count},0) ;;
+  }
+
+  measure: two_measures_combined {
+    type: number
+    sql: ${total_sale_price_filtered} * 1.0/ nullif(${total_sale_price},0);;
+    value_format_name: percent_1
+
   }
 
   measure: total_sale_price_filtered {

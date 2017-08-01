@@ -32,7 +32,7 @@ view: users {
 
   dimension: is_under_21 {
     type: yesno
-    hidden: yes
+#     hidden: yes
     sql: ${age} <= 21 ;;
   }
 
@@ -72,22 +72,22 @@ view: users {
     style: integer
   }
 
-#   filter: comparison_group_filter {
-#     type: string
-#     suggest_dimension: email
-#   }
+  filter: comparison_group_filter {
+    type: string
+    suggest_dimension: email
+  }
 
 
-#   dimension: comparison_group {
-#     type: string
-#     sql:
-#         CASE
-#           WHEN {% condition comparison_group_filter %} ${email} {% endcondition %} then 'Comparison Group'
-#           ELSE 'Rest of Population'
-#       END
-#
-#     ;;
-#   }
+  dimension: comparison_group {
+    type: string
+    sql:
+        CASE
+          WHEN {% condition comparison_group_filter %} ${email} {% endcondition %} then 'Comparison Group'
+          ELSE 'Rest of Population'
+      END
+
+    ;;
+  }
 
 
   dimension: is_new_user {
@@ -112,7 +112,9 @@ view: users {
 
   dimension: gender {
     type: string
-    sql: ${TABLE}.gender ;;
+    sql: ${TABLE}.gender
+
+    ;;
   }
 
   dimension: last_name {
