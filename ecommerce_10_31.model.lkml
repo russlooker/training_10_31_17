@@ -15,7 +15,7 @@ datagroup: nightly_etl {
 
 
 explore: order_items {
-  persist_with: nightly_etl
+#   persist_with: nightly_etl
   join: users {
     type: left_outer
     sql_on: ${order_items.user_id} = ${users.id};;
@@ -33,18 +33,18 @@ explore: order_items {
     sql_on: ${inventory_items.product_id} = ${products.id} ;;
     relationship: many_to_one
 #     fields: [products.department]
-    view_label: "Department"
+#     view_label: "Department"
   }
 
 }
 
 explore: users {
   join: user_facts {
-#     fields: [user_facts.average_lifetime_value
-#       , user_facts.first_order_date_date
-#       , user_facts.latest_order_date_date
-#       , user_facts.created_date_filter
-#     ]
+    fields: [user_facts.average_lifetime_value
+      , user_facts.first_order_date_date
+      , user_facts.latest_order_date_date
+      , user_facts.created_date_filter
+    ]
     view_label: "Users"
     type: left_outer
     relationship: one_to_one
@@ -70,6 +70,3 @@ explore: inventory_items {
     sql_on: ${inventory_items.product_id}=${products.id} ;;
   }
 }
-
-
-explore: user_facts_2 {}

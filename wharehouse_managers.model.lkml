@@ -1,5 +1,5 @@
 
-include: "ecom.model.lkml"
+include: "ecommerce_10_31.model.lkml"
 
 
 explore: order_items_for_warehouse_managers {
