@@ -14,9 +14,9 @@ view: user_facts {
        ;;
 #     persist_for: "3 hours"
 #     sql_trigger_value: select current_date  ;;
-  datagroup_trigger: nightly_etl
-    sortkeys: ["user_id"]
-    distribution: "user_id"
+#   datagroup_trigger: nightly_etl
+#     sortkeys: ["user_id"]
+#     distribution: "user_id"
   }
 #        AND {% condition created_date_filter %} OI.created_at {% endcondition %}
 

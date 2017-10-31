@@ -7,6 +7,13 @@ view: users {
     sql: ${TABLE}.id ;;
   }
 
+# dimension: pk {
+#   type: string
+#   primary_key: yes
+#   sql: ${id} || '-' || ${age} ;;
+# }
+
+
 #   dimension: custom_pk {
 #     type: string
 #     primary_key: yes
@@ -23,17 +30,26 @@ view: users {
     sql: ${TABLE}.age ;;
   }
 
+
   dimension: age_groups {
     type: tier
     tiers: [0,20,30,50]
     sql: ${age} ;;
-    style: interval
+    style: integer
   }
 
-  dimension: is_under_21 {
-    type: yesno
+  dimension: is_under_18 {
+    type: string
+    description: "Is the User under or over 18 based on today's date"
 #     hidden: yes
-    sql: ${age} <= 21 ;;
+    sql:
+    CASE
+    WHEN ${age} <= 18 THEN 'Young Person'
+    WHEN ${age} <= 30 THEN 'Person'
+    else 'Dont ask, assume 29'
+    END
+
+    ;;
   }
 
   dimension: city {

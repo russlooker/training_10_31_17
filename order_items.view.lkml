@@ -26,6 +26,13 @@ view: order_items {
     ]
     sql: ${TABLE}.created_at ;;
   }
+
+  dimension: custom_time {
+    group_label: "Created Date"
+    type: string
+    sql: ${created_week}  || '-' || ${created_quarter};;
+  }
+
   dimension_group: delivered {
     type: time
     timeframes: [
@@ -70,7 +77,7 @@ view: order_items {
 
   dimension: sale_price {
     type: number
-    sql: ${TABLE}.sale_price ;;
+    sql: ${TABLE}.sale_price / 100 ;;
   }
 
   dimension_group: shipped {
