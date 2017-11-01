@@ -119,6 +119,9 @@ view: users {
   dimension: first_name {
     type: string
     sql: ${TABLE}.first_name ;;
+    html:
+        <p>{{ value }}, {{ last_name._value }}</p>
+    ;;
   }
 
   dimension: full_name {

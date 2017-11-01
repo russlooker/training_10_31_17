@@ -15,7 +15,10 @@ datagroup: nightly_etl {
 
 
 explore: order_items {
-#   persist_with: nightly_etl
+  access_filter: {
+    field: products.brand
+    user_attribute: brand
+  }
   join: users {
     type: left_outer
     sql_on: ${order_items.user_id} =  ${users.id};;
@@ -70,3 +73,5 @@ explore: inventory_items {
     sql_on: ${inventory_items.product_id}=${products.id} ;;
   }
 }
+
+# explore: test_dependent_pdt {}

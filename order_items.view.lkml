@@ -98,6 +98,15 @@ view: order_items {
     type: string
     sql:
     ${TABLE}.status ;;
+    html:
+      {% if value == 'Shipped' or value == 'Complete' %}
+         <p><img src="http://findicons.com/files/icons/573/must_have/48/check.png" height=20 width=20>{{ rendered_value }}</p>
+      {% elsif value == 'Processing' %}
+        <p><img src="http://findicons.com/files/icons/1681/siena/128/clock_blue.png" height=20 width=20>{{ rendered_value }}</p>
+      {% else %}
+        <p><img src="http://findicons.com/files/icons/719/crystal_clear_actions/64/cancel.png" height=20 width=20>{{ rendered_value }}</p>
+      {% endif %}
+    ;;
   }
 
   dimension: user_id {

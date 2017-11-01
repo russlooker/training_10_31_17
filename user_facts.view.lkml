@@ -4,19 +4,24 @@ view: user_facts {
          OI.user_id
         ,sum(OI.sale_price) as total_lifetime_sales
         ,count(*) as lifetime_item_count
-        ,min(created_at) as first_order_date
-        ,max(created_at) as latest_order_date
+        ,min(OI.created_at) as first_order_date
+        ,max(OI.created_at) as latest_order_date
         ,avg(sale_price) as avg_sale_per_user
       FROM public.order_items OI
+      LEFT JOIN public.users U ON (OI.user_id = U.id)
       WHERE
         1=1
+        AND u.state in ({{ _user_attributes['sales_region'] }})
+        --AND {% condition users.created_date %} OI.created_at {% endcondition %}
+        --AND {% condition created_date_filter %} OI.created_at {% endcondition %}
       GROUP BY 1
        ;;
 #     persist_for: "3 hours"
 #     sql_trigger_value: select current_date  ;;
-#   datagroup_trigger: nightly_etl
+#     datagroup_trigger: nightly_etl
 #     sortkeys: ["user_id"]
 #     distribution: "user_id"
+# indexes: ["user_id"]
   }
 #        AND {% condition created_date_filter %} OI.created_at {% endcondition %}
 
